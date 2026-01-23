@@ -1,0 +1,52 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---- Global polish (still Tailwind-first) ---- */
+
+:root {
+  color-scheme: dark;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+/* ---- Electron: draggable top bar (macOS hiddenInset) ---- */
+.titlebar { -webkit-app-region: drag; }
+.titlebar * { -webkit-app-region: no-drag; }
+.no-drag { -webkit-app-region: no-drag; }
+
+/* Soft selection */
+::selection { background: rgba(99, 102, 241, .35); }
+
+/* Custom scrollbars */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,.22) transparent;
+}
+*::-webkit-scrollbar { width: 10px; height: 10px; }
+*::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,.18);
+  border-radius: 999px;
+  border: 2px solid rgba(0,0,0,0);
+  background-clip: padding-box;
+}
+*::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,.28); }
+*::-webkit-scrollbar-track { background: transparent; }
+
+/* Reduce motion respect */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
+}
+
+/* Markdown content tweaks (typography plugin handles most) */
+.prose :where(code):not(:where([class~="not-prose"] *)) {
+  @apply font-mono text-[0.95em] px-1.5 py-0.5 rounded-md bg-white/10;
+}
+.prose pre {
+  @apply bg-white/10 border border-white/10 rounded-xl;
+}
+.prose pre code {
+  @apply bg-transparent p-0;
+}
