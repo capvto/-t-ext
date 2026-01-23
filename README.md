@@ -31,8 +31,8 @@
 
 ## Caratteristiche
 
-- **Editor a blocchi (paragraph blocks)**: ogni paragrafo è un blocco indipendente, più pulito e “Notion‑like”.
-- **Anteprima “live” stile Typora**: mentre scrivi sei in editing, quando smetti di digitare compare l’anteprima.
+- **Editor a blocchi (paragraph blocks)**: ogni paragrafo è un blocco indipendente, più pulito.
+- **Anteprima “live”**: mentre scrivi sei in editing, quando smetti di digitare compare l’anteprima.
 - **Shortcut inline per formattazione**
   - `Ctrl/Cmd + B` → **grassetto**
   - `Ctrl/Cmd + I` → *corsivo*
