@@ -5,6 +5,7 @@ import type { Doc } from "../lib/types";
 import { cn, uid } from "../lib/utils";
 import MarkdownBlock from "./MarkdownBlock";
 import { useInertialScroll } from "../hooks/useInertialScroll";
+import PolicyModal from "./PolicyModal";
 
 type Props = {
   sidebarOpen: boolean;
@@ -45,6 +46,7 @@ export default function Editor({
   const [title, setTitle] = useState(doc.title);
   const [blocks, setBlocks] = useState<Block[]>(() => splitBlocks(doc.content).map((t, i) => ({ id: `${doc.id}:${i}:${uid().slice(0, 8)}`, text: t })));
   const [activeBlockId, setActiveBlockId] = useState<string | null>(null);
+  const [policyOpen, setPolicyOpen] = useState(false);
 
   // Tracks the last content we pushed upward via `onUpdateContent`.
   // If `doc.content` changes and it doesn't match this ref, it means the parent
@@ -291,15 +293,27 @@ export default function Editor({
 
             {/* Footer hint */}
             <div className="mt-10 text-center text-xs text-white/35">
-              (t)ext · Sviluppato da{" "}
-              <a
-                href="https://www.matteocaputo.dev"
-                target="_blank"
-                rel="noreferrer"
-                className="text-white/55 underline decoration-white/20 underline-offset-4 transition hover:text-white"
-              >
-                Matteo Caputo
-              </a>
+              <div>
+                (t)ext · Sviluppato da{" "}
+                <a
+                  href="https://www.matteocaputo.dev"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-white/55 underline decoration-white/20 underline-offset-4 transition hover:text-white"
+                >
+                  Matteo Caputo
+                </a>
+              </div>
+              <div className="mt-1 flex flex-wrap items-center justify-center gap-x-3 gap-y-1">
+                <button
+                  type="button"
+                  onClick={() => setPolicyOpen(true)}
+                  data-legal="policy-link"
+                  className="no-drag text-white/55 underline decoration-white/20 underline-offset-4 transition hover:text-white"
+                >
+                  Cookie &amp; Privacy Policy
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -307,6 +321,15 @@ export default function Editor({
         {/* Subtle bottom glow */}
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/40 to-transparent" />
       </div>
+
+      <AnimatePresence>
+        {policyOpen && (
+          <PolicyModal
+            key="policy"
+            onClose={() => setPolicyOpen(false)}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 }
