@@ -1,0 +1,48 @@
+{
+  "language": {
+    "label": "Language",
+    "switch": "Switch language",
+    "it": "Italian",
+    "en": "English"
+  },
+  "doc": {
+    "untitled": "Untitled"
+  },
+  "sidebar": {
+    "title": "Documents",
+    "searchPlaceholder": "Search…",
+    "new": "New document",
+    "closeOverlay": "Close sidebar overlay",
+    "close": "Close sidebar",
+    "tip": "Tip: Cmd/Ctrl+Enter to create a new block.",
+    "openAria": "Open {{title}}",
+    "rename": "Rename",
+    "delete": "Delete"
+  },
+  "editor": {
+    "openDocs": "Open documents",
+    "closeDocs": "Close documents",
+    "titlePlaceholder": "Title…",
+    "stats": "{{words}} words · {{chars}} characters",
+    "newDoc": "New document",
+    "export": "Export .md",
+    "import": "Import into this document",
+    "hintClick": "Click a block to edit",
+    "hintExit": "to exit",
+    "hintSplit": "to split",
+    "hintDeleteEmpty": "on an empty block to delete",
+    "addBlock": "+ Block",
+    "footerBy": "Developed by",
+    "policyLink": "Cookie & Privacy Policy"
+  },
+  "block": {
+    "delete": "Delete block",
+    "placeholder": "Write…",
+    "editing": "Editing…",
+    "previewReady": "Preview ready"
+  },
+  "cookie": {
+    "bannerText": "We only use technical storage (localStorage) to save documents on your device.",
+    "ok": "OK"
+  }
+}

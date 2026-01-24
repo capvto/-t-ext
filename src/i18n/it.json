@@ -1,0 +1,48 @@
+{
+  "language": {
+    "label": "Lingua",
+    "switch": "Cambia lingua",
+    "it": "Italiano",
+    "en": "Inglese"
+  },
+  "doc": {
+    "untitled": "Senza titolo"
+  },
+  "sidebar": {
+    "title": "Documenti",
+    "searchPlaceholder": "Cerca…",
+    "new": "Nuovo documento",
+    "closeOverlay": "Chiudi overlay documenti",
+    "close": "Chiudi documenti",
+    "tip": "Tip: Cmd/Ctrl+Enter per creare un nuovo blocco.",
+    "openAria": "Apri {{title}}",
+    "rename": "Rinomina",
+    "delete": "Elimina"
+  },
+  "editor": {
+    "openDocs": "Apri documenti",
+    "closeDocs": "Chiudi documenti",
+    "titlePlaceholder": "Titolo…",
+    "stats": "{{words}} parole · {{chars}} caratteri",
+    "newDoc": "Nuovo documento",
+    "export": "Esporta .md",
+    "import": "Importa in questo documento",
+    "hintClick": "Clicca un blocco per modificare",
+    "hintExit": "per uscire",
+    "hintSplit": "per split",
+    "hintDeleteEmpty": "su blocco vuoto per cancellare",
+    "addBlock": "+ Blocco",
+    "footerBy": "Sviluppato da",
+    "policyLink": "Cookie & Privacy Policy"
+  },
+  "block": {
+    "delete": "Elimina blocco",
+    "placeholder": "Scrivi…",
+    "editing": "Modifica…",
+    "previewReady": "Anteprima pronta"
+  },
+  "cookie": {
+    "bannerText": "Usiamo solo storage tecnico (localStorage) per salvare i documenti sul tuo dispositivo.",
+    "ok": "OK"
+  }
+}

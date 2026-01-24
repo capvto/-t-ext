@@ -23,8 +23,8 @@ app.setName(APP_DISPLAY_NAME);
 if (process.platform === "darwin") {
   app.setAboutPanelOptions({
     applicationName: APP_DISPLAY_NAME,
-    website: "https://www.matteocaputo.dev",
-    credits: "Sviluppato da Matteo Caputo"
+    website: "https://www.matteocaputo.dev/",
+    credits: "Sviluppato da Matteo Caputo e Alessio Daví"
   });
 }
 
@@ -159,7 +159,11 @@ function createAppMenu() {
           { type: "separator" },
           {
             label: "Sviluppato da Matteo Caputo",
-            click: () => shell.openExternal("https://www.matteocaputo.dev")
+            click: () => shell.openExternal("https://www.matteocaputo.dev/")
+          },
+          {
+            label: "Sviluppato da Alessio Daví",
+            click: () => shell.openExternal("https://davialessio.dev/")
           },
           { type: "separator" },
           { role: "services" },
@@ -181,6 +185,19 @@ function createAppMenu() {
       Menu.buildFromTemplate([
         { role: "editMenu" },
         safeViewMenu,
+        {
+          label: "Aiuto",
+          submenu: [
+            {
+              label: "Sviluppato da Matteo Caputo",
+              click: () => shell.openExternal("https://www.matteocaputo.dev/")
+            },
+            {
+              label: "Sviluppato da Alessio Daví",
+              click: () => shell.openExternal("https://davialessio.dev/")
+            }
+          ]
+        },
         { role: "windowMenu" }
       ])
     );

@@ -1,11 +1,13 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Download, LayoutGrid, Plus, Upload } from "lucide-react";
+import { Cookie, Download, LayoutGrid, Plus, Upload } from "lucide-react";
 import type { Doc } from "../lib/types";
 import { cn, uid } from "../lib/utils";
 import MarkdownBlock from "./MarkdownBlock";
-import { useInertialScroll } from "../hooks/useInertialScroll";
 import PolicyModal from "./PolicyModal";
+import CookieBanner from "./CookieBanner";
+import { useInertialScroll } from "../hooks/useInertialScroll";
+import { useI18n } from "../i18n";
 
 type Props = {
   sidebarOpen: boolean;
@@ -42,6 +44,7 @@ export default function Editor({
   onExport,
   onImport
 }: Props) {
+  const { t, lang, setLang } = useI18n();
   const isMac = (window.electronAPI?.platform === "darwin") || /Mac/i.test(navigator.platform);
   const [title, setTitle] = useState(doc.title);
   const [blocks, setBlocks] = useState<Block[]>(() => splitBlocks(doc.content).map((t, i) => ({ id: `${doc.id}:${i}:${uid().slice(0, 8)}`, text: t })));
@@ -181,7 +184,7 @@ export default function Editor({
         <div className="flex items-center gap-2">
           <GlassIconButton
             icon={<LayoutGrid className="h-4 w-4" />}
-            label={sidebarOpen ? "Chiudi documenti" : "Apri documenti"}
+            label={sidebarOpen ? t("editor.closeDocs") : t("editor.openDocs")}
             onClick={onToggleSidebar}
           />
           <div className="hidden sm:block h-6 w-px bg-white/10" />
@@ -192,31 +195,31 @@ export default function Editor({
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             onBlur={() => onRename(title)}
-            placeholder="Titolo…"
+            placeholder={t("editor.titlePlaceholder")}
             className={cn(
               "no-drag w-full bg-transparent text-base font-medium outline-none placeholder:text-white/35",
               "text-white/90"
             )}
           />
           <div className="mt-0.5 text-[11px] text-white/45">
-            {docStats.words} parole · {docStats.chars} caratteri
+            {t("editor.stats", { words: docStats.words, chars: docStats.chars })}
           </div>
         </div>
 
         <div className="flex items-center gap-1.5">
           <GlassIconButton
             icon={<Plus className="h-4 w-4" />}
-            label="Nuovo documento"
+            label={t("editor.newDoc")}
             onClick={onCreateDoc}
           />
           <GlassIconButton
             icon={<Download className="h-4 w-4" />}
-            label="Esporta .md"
+            label={t("editor.export")}
             onClick={onExport}
           />
           <GlassIconButton
             icon={<Upload className="h-4 w-4" />}
-            label="Importa in questo documento"
+            label={t("editor.import")}
             onClick={async () => {
               if (window.electronAPI?.openMarkdown) {
                 const res = await window.electronAPI.openMarkdown();
@@ -225,6 +228,13 @@ export default function Editor({
                 inputFileRef.current?.click();
               }
             }}
+          />
+
+          {/* Language switch */}
+          <LangSwitch
+            lang={lang}
+            onChange={setLang}
+            ariaLabel={t("language.switch")}
           />
           <input
             ref={inputFileRef}
@@ -261,16 +271,16 @@ export default function Editor({
           <div className="mx-auto w-full max-w-[860px]">
             <div className="mb-5 flex items-center justify-between">
               <div className="text-xs text-white/45">
-                Clicca un blocco per modificare ·{" "}
-                <span className="text-white/70">Esc</span> per uscire ·{" "}
-                <span className="text-white/70">Cmd/Ctrl+Enter</span> per split ·{" "}
-                <span className="text-white/70">Backspace</span> su blocco vuoto per cancellare
+                {t("editor.hintClick")} ·{" "}
+                <span className="text-white/70">Esc</span> {t("editor.hintExit")} ·{" "}
+                <span className="text-white/70">Cmd/Ctrl+Enter</span> {t("editor.hintSplit")} ·{" "}
+                <span className="text-white/70">Backspace</span> {t("editor.hintDeleteEmpty")}
               </div>
               <button
                 onClick={() => addEmptyBlock(blocks[blocks.length - 1]?.id)}
                 className="no-drag rounded-xl border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-white/70 transition hover:bg-white/10 hover:text-white"
               >
-                + Blocco
+                {t("editor.addBlock")}
               </button>
             </div>
 
@@ -291,45 +301,56 @@ export default function Editor({
               ))}
             </div>
 
-            {/* Footer hint */}
-            <div className="mt-10 text-center text-xs text-white/35">
-              <div>
-                (t)ext · Sviluppato da{" "}
-                <a
-                  href="https://www.matteocaputo.dev"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-white/55 underline decoration-white/20 underline-offset-4 transition hover:text-white"
-                >
-                  Matteo Caputo
-                </a>
-              </div>
-              <div className="mt-1 flex flex-wrap items-center justify-center gap-x-3 gap-y-1">
-                <button
-                  type="button"
-                  onClick={() => setPolicyOpen(true)}
-                  data-legal="policy-link"
-                  className="no-drag text-white/55 underline decoration-white/20 underline-offset-4 transition hover:text-white"
-                >
-                  Cookie &amp; Privacy Policy
-                </button>
-              </div>
-            </div>
-          </div>
+            
+{/* Footer hint */}
+				<div className="mt-10 text-center text-xs text-white/35">
+				  <div>
+				    (t)ext · {t("editor.footerBy")}{" "}
+                    <a
+                      href="https://www.matteocaputo.dev/"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-white/55 underline decoration-white/20 underline-offset-4 transition hover:text-white"
+                    >
+                      Matteo Caputo
+                    </a>{" "}
+                    <span className="text-white/25">·</span>{" "}
+                    <a
+                      href="https://davialessio.dev/"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-white/55 underline decoration-white/20 underline-offset-4 transition hover:text-white"
+                    >
+                      Alessio Daví
+                    </a>
+				  </div>
+  <div className="mt-1 flex flex-wrap items-center justify-center gap-x-3 gap-y-1">
+    <button
+      type="button"
+      onClick={() => setPolicyOpen(true)}
+      data-legal="policy-link"
+      className="no-drag inline-flex items-center gap-1.5 text-white/55 underline decoration-white/20 underline-offset-4 transition hover:text-white"
+    >
+      <Cookie className="h-3.5 w-3.5" />
+      {t("editor.policyLink")}
+    </button>
+  </div>
+</div>
+</div>
         </div>
 
-        {/* Subtle bottom glow */}
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/40 to-transparent" />
-      </div>
+        
+{/* Subtle bottom glow */}
+<div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/40 to-transparent" />
 
-      <AnimatePresence>
-        {policyOpen && (
-          <PolicyModal
-            key="policy"
-            onClose={() => setPolicyOpen(false)}
-          />
-        )}
-      </AnimatePresence>
+<CookieBanner onOpenPolicy={() => setPolicyOpen(true)} />
+
+<AnimatePresence>
+  {policyOpen && (
+    <PolicyModal key="policy" onClose={() => setPolicyOpen(false)} />
+  )}
+</AnimatePresence>
+      </div>
     </div>
   );
 }
@@ -351,5 +372,41 @@ function GlassIconButton({ icon, label, onClick }: { icon: React.ReactNode; labe
       <span className="ml-2 hidden text-xs font-medium sm:inline">{label}</span>
       <span className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 transition group-hover:opacity-100 bg-gradient-to-b from-white/10 to-transparent" />
     </button>
+  );
+}
+
+function LangSwitch({
+  lang,
+  onChange,
+  ariaLabel
+}: {
+  lang: "it" | "en";
+  onChange: (l: "it" | "en") => void;
+  ariaLabel: string;
+}) {
+  const base =
+    "no-drag inline-flex items-center rounded-2xl border border-white/10 bg-white/5 p-1 shadow-glass backdrop-blur-xl";
+  const btn =
+    "rounded-xl px-2.5 py-1.5 text-[11px] font-semibold tracking-wide transition focus:outline-none focus-visible:ring-2 focus-visible:ring-white/20";
+  const active = "bg-white/12 text-white";
+  const inactive = "text-white/60 hover:bg-white/8 hover:text-white/85";
+
+  return (
+    <div className={base} aria-label={ariaLabel} role="group">
+      <button
+        type="button"
+        className={cn(btn, lang === "it" ? active : inactive)}
+        onClick={() => onChange("it")}
+      >
+        IT
+      </button>
+      <button
+        type="button"
+        className={cn(btn, lang === "en" ? active : inactive)}
+        onClick={() => onChange("en")}
+      >
+        EN
+      </button>
+    </div>
   );
 }

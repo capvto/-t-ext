@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Trash2 } from "lucide-react";
 import { renderMarkdown } from "../lib/markdown";
 import { cn } from "../lib/utils";
+import { useI18n } from "../i18n";
 
 type Props = {
   id: string;
@@ -26,6 +27,7 @@ export default function MarkdownBlock({
   onMergePrev,
   onDelete
 }: Props) {
+  const { t } = useI18n();
   const [local, setLocal] = useState(text);
   const [typing, setTyping] = useState(false);
   const tRef = useRef<number | null>(null);
@@ -85,8 +87,8 @@ export default function MarkdownBlock({
       <button
         type="button"
         data-no-activate
-        aria-label="Elimina blocco"
-        title="Elimina blocco"
+        aria-label={t("block.delete")}
+        title={t("block.delete")}
         onClick={(e) => {
           e.preventDefault();
           e.stopPropagation();
@@ -194,7 +196,7 @@ export default function MarkdownBlock({
                     }
                   }
                 }}
-                placeholder="Scrivi…"
+                placeholder={t("block.placeholder")}
                 className={cn(
                   "w-full resize-none bg-transparent text-[15px] leading-relaxed outline-none",
                   "text-white/90 placeholder:text-white/35",
@@ -206,7 +208,7 @@ export default function MarkdownBlock({
               {/* Typora-like hint: when user stops typing, fade to preview */}
               <div className="mt-2 flex items-center justify-between text-[11px] text-white/40">
                 <span>
-                  {typing ? "Editing…" : "Preview ready"}
+                  {typing ? t("block.editing") : t("block.previewReady")}
                 </span>
                 <span className="text-white/55">
                   Esc · Cmd/Ctrl+Enter
