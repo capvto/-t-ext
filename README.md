@@ -116,10 +116,13 @@ npm run dist
 
 ---
 
-## Autore
+## Autori
 
 **Matteo Caputo**  
 Portfolio: https://www.matteocaputo.dev
+
+**Alessio Davì**  
+Portfolio: https://www.davialessio.dev
 
 ---
 
