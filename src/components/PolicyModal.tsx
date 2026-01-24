@@ -78,8 +78,8 @@ export default function PolicyModal({ onClose }: Props) {
 
                 <h2>Titolare del trattamento</h2>
                 <p>
-                  Il titolare del trattamento è <strong>Matteo Caputo</strong> ("Titolare"). Puoi contattare il Titolare tramite
-                  il form di contatto presente su matteocaputo.dev.
+                  Il titolare del trattamento è <strong>Renato Caputo</strong> ("Titolare"). Puoi contattare il Titolare tramite
+                  i contatti indicati nell'app o sul sito di riferimento.
                 </p>
 
                 <h2>Dati trattati</h2>
@@ -139,7 +139,7 @@ export default function PolicyModal({ onClose }: Props) {
                 <h2>Diritti dell&apos;interessato</h2>
                 <p>
                   In base al GDPR, hai diritto di ottenere accesso, rettifica, cancellazione, limitazione, opposizione e portabilità dei dati,
-                  nei limiti applicabili. Per esercitare i diritti puoi contattare il Titolare tramite il form su matteocaputo.dev.
+                  nei limiti applicabili. Per esercitare i diritti puoi contattare il Titolare tramite i contatti indicati nell'app o sul sito di riferimento.
                 </p>
 
                 <h2>Aggiornamenti</h2>
@@ -156,7 +156,7 @@ export default function PolicyModal({ onClose }: Props) {
 
                 <h2>Data controller</h2>
                 <p>
-                  The data controller is <strong>Matteo Caputo</strong> ("Controller"). You can contact the Controller via the contact form on matteocaputo.dev.
+                  The data controller is <strong>Renato Caputo</strong> ("Controller"). You can contact the Controller using the contact details provided in the app or on the relevant website.
                 </p>
 
                 <h2>Data we process</h2>
@@ -212,7 +212,7 @@ export default function PolicyModal({ onClose }: Props) {
                 <h2>Your rights</h2>
                 <p>
                   Under the GDPR, you may have the right to access, rectify, erase, restrict or object to processing, and to data portability, where applicable.
-                  To exercise your rights, contact the Controller via the form on matteocaputo.dev.
+                  To exercise your rights, contact the Controller using the contact details provided in the app or on the relevant website.
                 </p>
 
                 <h2>Updates</h2>

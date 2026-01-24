@@ -3,7 +3,7 @@
 <p align="center">
   <b>(t)ext</b> è un editor di Markdown <i>block‑based</i> dal look moderno, con anteprima immediata.
   <br/>
-  Sviluppato da <a href="https://www.matteocaputo.dev">Matteo Caputo</a>
+  Sviluppato da <a href="https://www.matteocaputo.dev">Matteo Caputo</a> e <a href="https://www.davialessio.dev">Alessio Daví</a>
 </p>
 
 <p align="center">
