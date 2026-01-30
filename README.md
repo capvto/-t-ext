@@ -1,0 +1,142 @@
+# (t)ext
+
+<p align="center">
+  <b>(t)ext</b> è un editor di Markdown in Electron con due modalità: <i>classica</i> (un unico documento) e <i>block‑based</i> opzionale.
+  <br/>
+  La modalità a blocchi è disattivata di default e si può attivare da <b>Personalizza</b>.
+  <br/>
+  Sviluppato da <a href="https://www.matteocaputo.dev">Matteo Caputo</a>, <a href="https://davialessio.dev/">Alessio Daví</a> e <a href="https://manuelzambelli.dev/">Manuel Zambelli</a>
+</p>
+
+<p align="center">
+  <img alt="Electron" src="https://img.shields.io/badge/Electron-2B2E3A?logo=electron&logoColor=white" />
+  <img alt="React" src="https://img.shields.io/badge/React-20232A?logo=react&logoColor=61DAFB" />
+  <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white" />
+  <img alt="Vite" src="https://img.shields.io/badge/Vite-646CFF?logo=vite&logoColor=white" />
+  <img alt="Tailwind CSS" src="https://img.shields.io/badge/Tailwind%20CSS-0F172A?logo=tailwindcss&logoColor=38BDF8" />
+</p>
+
+> Versione: **0.1.1-beta**  
+> Versioning: **major.minor.patch** (SemVer). La versione viene mostrata nel footer e letta direttamente da `package.json`.
+
+---
+
+## Cosa fa (in breve)
+
+- **Modalità classica (default)**: un unico editor Markdown continuo.
+- **Modalità a blocchi (opzionale)**: ogni “paragrafo” diventa un blocco indipendente (attivabile da *Personalizza*).
+- **Editing one‑click**: in classico e a blocchi, un click entra in modifica e puoi scrivere subito (niente doppio click).
+- **Preview on‑demand**: mentre modifichi vedi solo l’editor; la preview compare quando esci con <kbd>Esc</kbd>.
+- **Markdown moderno e sicuro**: rendering con **markdown-it** + sanitizzazione con **DOMPurify**.
+- **Codice con syntax highlighting**: evidenziazione con **highlight.js** e pulsante **Copia** sui codeblock.
+- **Syntax highlighting leggero anche nell’editor** (inline): `**bold**`, `*italic*`, `` `code` ``, link, heading, quote… (senza perdere la semplicità della textarea).
+- **Import / Export**: importa un `.md` in un documento o esporta il contenuto in un file.
+- **Documenti**: sidebar con ricerca, rinomina inline, crea/elimina e apertura hover dal bordo.
+- **Personalizza (globale)**: 10 temi, selezione font (UI/preview) + monospace, CSS globale e toggle modalità a blocchi.
+- **Avanzate (per nota)**: CSS per singola nota (scopato automaticamente) + estensioni Markdown (plugin JS).
+- **Pubblica / Online (solo web)**: pubblica una nota come pagina condivisibile con link pubblico + link/codice segreto per modificare o eliminare.
+  - Supporta link personalizzato (slug), pagina pubblica con copy‑link, modalità edit, salvataggio, delete e “Salva in (t)ext”.
+- **Changelog in‑app**: clic sulla versione nel footer per aprire il changelog.
+- **Multi‑lingua**: IT / EN.
+- **Salvataggio locale**: autosave in `localStorage` (nessun backend).
+
+---
+
+## Scorciatoie (keyboard)
+
+Dentro un blocco in modifica:
+
+- <kbd>Esc</kbd> → esci dalla modifica (torna la preview)
+- <kbd>Cmd</kbd>/<kbd>Ctrl</kbd> + <kbd>Enter</kbd> → **split** del blocco al cursore
+- <kbd>Backspace</kbd> all’inizio del blocco → unisci al blocco precedente  
+  Se il blocco è vuoto → **cancella** il blocco
+- <kbd>Cmd</kbd>/<kbd>Ctrl</kbd> + <kbd>B</kbd> → **bold** (wrappa in `**…**`)
+- <kbd>Cmd</kbd>/<kbd>Ctrl</kbd> + <kbd>I</kbd> → *italic* (wrappa in `*…*`)
+- <kbd>Cmd</kbd>/<kbd>Ctrl</kbd> + <kbd>U</kbd> → <u>underline</u> (wrappa in `<u>…</u>`)
+
+---
+
+## Personalizzazione per nota (CSS + Estensioni)
+
+In alto a destra trovi il pulsante **Customize / Personalizza**.
+
+### CSS (tema)
+
+Puoi scegliere un **tema predefinito** oppure incollare CSS libero: l’app lo **scopa automaticamente** alla nota, quindi non “sporca” il resto dell’interfaccia.
+
+### Estensioni Markdown (JavaScript)
+
+Ogni estensione è uno script che deve terminare con `return { ... }`.
+
+- `transform(markdown, api)` → trasforma il testo prima del rendering (perfetto per sintassi tipo `!ciao!`).
+- `use(md, api)` → per regole avanzate via markdown-it.
+
+L’oggetto `api` offre helper utili:
+
+- `api.inline(text, className)` → genera HTML inline sicuro (testo escapato)
+- `api.block(text, className)` → genera un blocco HTML (con newline)
+
+> Nota: i plugin sono **codice fidato**. Usali solo con script che conosci.
+
+---
+
+## Requisiti
+
+- Node.js (LTS consigliato)
+- npm
+
+---
+
+## Setup
+
+```bash
+npm install
+```
+
+### Sviluppo (Electron + Vite)
+
+```bash
+npm run dev
+```
+
+### Sviluppo (solo web)
+
+```bash
+npm run dev:web
+```
+
+### Build / Preview
+
+```bash
+npm run build
+npm run preview
+```
+
+### Packaging (Electron Builder)
+
+```bash
+# build cartella (senza installer)
+npm run pack
+
+# build + installer (mac/win/linux)
+npm run dist
+```
+
+---
+
+## Struttura del progetto
+
+- `electron/` → main process + preload (IPC per import/export e integrazioni native)
+- `netlify/` → Functions per la modalità **Pubblica/Online** (solo web) + storage via Netlify Blobs
+- `src/` → app React
+  - `components/MarkdownBlock.tsx` → blocco (editor + preview)
+  - `lib/markdown.ts` → renderer Markdown + highlighting codeblock
+  - `lib/mdHighlight.ts` → highlighting “leggero” nell’editor
+
+---
+
+## Privacy
+
+(t)ext usa **storage tecnico locale** (`localStorage`) per salvare i documenti sul dispositivo.  
+Nella versione **web**, se usi **Pubblica/Online**, il contenuto della pagina pubblica viene salvato su infrastruttura Netlify (Blobs/Functions) per poterlo condividere.  
+Non include tracking/analytics di terze parti.
