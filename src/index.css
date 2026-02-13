@@ -1,0 +1,109 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---- Global polish (still Tailwind-first) ---- */
+
+:root {
+  color-scheme: dark;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+/* ---- Electron: draggable top bar (macOS hiddenInset) ---- */
+.titlebar { -webkit-app-region: drag; }
+.titlebar * { -webkit-app-region: no-drag; }
+.no-drag { -webkit-app-region: no-drag; }
+
+/* Safari/WebView quirk: SVG icons inside buttons/links can sometimes become the
+   event target and prevent the parent click from firing. Lucide icons ship as
+   inline SVG, so we make them transparent to pointer events. */
+.lucide { pointer-events: none; }
+
+/* Topbar controls: deterministic tap/click + keyboard-only focus ring. */
+[data-ui="topbar-btn"] {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  position: relative;
+  z-index: 1;
+}
+[data-ui="topbar-btn"]:focus-visible {
+  outline: 2px solid rgba(255,255,255,.22);
+  outline-offset: 2px;
+}
+[data-ui="topbar-btn"] svg { pointer-events: none; }
+
+
+
+/* Soft selection */
+::selection { background: rgba(99, 102, 241, .35); }
+
+/* Custom scrollbars */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,.22) transparent;
+}
+*::-webkit-scrollbar { width: 10px; height: 10px; }
+*::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,.18);
+  border-radius: 999px;
+  border: 2px solid rgba(0,0,0,0);
+  background-clip: padding-box;
+}
+*::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,.28); }
+*::-webkit-scrollbar-track { background: transparent; }
+
+/* Reduce motion respect */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
+}
+
+/* Markdown content tweaks (typography plugin handles most) */
+.prose :where(code):not(:where([class~="not-prose"] *)) {
+  @apply font-mono text-[0.95em] px-1.5 py-0.5 rounded-md bg-white/10;
+}
+.prose pre {
+  @apply bg-white/10 border border-white/10 rounded-xl;
+}
+.prose pre code {
+  @apply bg-transparent p-0;
+}
+
+/* highlight.js theme adds its own background/padding. We keep it transparent
+   and let our Tailwind styles define the block container look. */
+.hljs { background: transparent !important; padding: 0 !important; }
+
+/* Copy button inside code blocks (inserted at runtime in preview) */
+.codewrap .copy-btn {
+  @apply absolute right-2 top-2 rounded-lg border border-white/10 bg-black/40 px-2.5 py-1 text-[11px] text-white/75 backdrop-blur transition;
+}
+.codewrap .copy-btn:hover { @apply bg-black/55 text-white; }
+.codewrap .copy-btn:active { transform: translateY(1px); }
+
+/* Tailwind Typography adds automatic quote marks inside blockquotes.
+   For Markdown notes ("> ...") this can be distracting, so we disable it.
+   Users can still type their own quotes: > "ciao" */
+.prose blockquote {
+  quotes: none;
+}
+.prose blockquote p:first-of-type::before,
+.prose blockquote p:last-of-type::after {
+  content: none !important;
+}
+
+/* --- Editor: lightweight Markdown highlighting (textarea overlay) --- */
+.md-sym { @apply text-white/35; }
+.md-bold { @apply text-white/95 font-semibold; }
+.md-italic { @apply text-white/95 italic; }
+.md-strike { @apply text-white/70 line-through; }
+.md-heading { @apply text-indigo-200/90 font-semibold; }
+.md-quote { @apply text-white/85; }
+.md-list { @apply text-white/85; }
+.md-code { @apply text-emerald-200/90 bg-white/10 px-1 py-[1px] rounded; }
+.md-fence { @apply text-white/40; }
+.md-fence-lang { @apply text-white/35; }
+.md-codeblock { @apply text-emerald-200/80; }
+.md-link-text { @apply text-cyan-200/90 underline decoration-white/20; }
+.md-link-url { @apply text-white/40; }

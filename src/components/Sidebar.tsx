@@ -1,0 +1,198 @@
+import { useMemo, useState } from "react";
+import { motion } from "framer-motion";
+import { FileText, Plus, Search, Trash2, X } from "lucide-react";
+import type { Doc } from "../lib/types";
+import { STARTUP_DOC_ID } from "../lib/constants";
+import { cn } from "../lib/utils";
+import { displayDocTitle, useI18n } from "../i18n";
+
+type Props = {
+  docs: Doc[];
+  activeId: string;
+  blocksEnabled: boolean;
+  onClose: () => void;
+  onSelect: (id: string) => void;
+  onCreate: () => void;
+  onDelete: (id: string) => void;
+  onRename: (id: string, title: string) => void;
+  /** Used for hover-driven sidebar: lets the parent know when the pointer is over the sidebar. */
+  onHoverChange?: (hovering: boolean) => void;
+};
+
+export default function Sidebar({ docs, activeId, blocksEnabled: _blocksEnabled, onClose, onSelect, onCreate, onDelete, onRename, onHoverChange }: Props) {
+  const { t } = useI18n();
+  const isMac = (window.electronAPI?.platform === "darwin") || /Mac/i.test(navigator.platform);
+  const [q, setQ] = useState("");
+  const filtered = useMemo(() => {
+    const s = q.trim().toLowerCase();
+    if (!s) return docs;
+    return docs.filter(d => d.title.toLowerCase().includes(s) || d.content.toLowerCase().includes(s));
+  }, [docs, q]);
+
+  return (
+    <>
+      <motion.aside
+        className={cn(
+          "fixed left-4 top-4 z-50 h-[calc(100%-2rem)] w-[min(360px,calc(100%-2rem))] overflow-hidden rounded-3xl border border-white/10 bg-white/10 shadow-glow backdrop-blur-2xl",
+          // Avoid overlapping the macOS traffic-lights area
+          isMac && "top-[64px]"
+        )}
+        onMouseEnter={() => onHoverChange?.(true)}
+        onMouseLeave={() => onHoverChange?.(false)}
+        initial={{ x: -24, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        exit={{ x: -24, opacity: 0 }}
+        transition={{ duration: 0.25, ease: [0.2, 0.8, 0.2, 1] }}
+      >
+        <div className="flex h-full flex-col">
+          <div className="flex items-center justify-between px-4 py-3">
+            <div className="flex items-center gap-2 text-sm font-medium text-white/90">
+              <FileText className="h-4 w-4 opacity-80" />
+              {t("sidebar.title")}
+            </div>
+            <button
+              onClick={onClose}
+              className="rounded-xl p-2 text-white/80 transition hover:bg-white/10 hover:text-white"
+              aria-label={t("sidebar.close")}
+            >
+              <X className="h-4 w-4" />
+            </button>
+          </div>
+
+          <div className="px-4 pb-3">
+            <div className="flex items-center gap-2 rounded-2xl border border-white/10 bg-white/10 px-3 py-2 backdrop-blur-xl">
+              <Search className="h-4 w-4 text-white/60" />
+              <input
+                value={q}
+                onChange={(e) => setQ(e.target.value)}
+                placeholder={t("sidebar.searchPlaceholder")}
+                className="w-full bg-transparent text-sm text-white/90 outline-none placeholder:text-white/40"
+              />
+              <button
+                onClick={onCreate}
+                className="rounded-xl p-2 text-white/80 transition hover:bg-white/10 hover:text-white"
+                aria-label={t("sidebar.new")}
+                title={t("sidebar.new")}
+              >
+                <Plus className="h-4 w-4" />
+              </button>
+            </div>
+          </div>
+
+          <div className="flex-1 overflow-auto px-2 pb-3">
+            <div className="space-y-2">
+              {filtered.map((d) => (
+                <DocRow
+                  key={d.id}
+                  doc={d}
+                  active={d.id === activeId}
+                  isStartup={d.id === STARTUP_DOC_ID}
+                  onSelect={() => onSelect(d.id)}
+                  onDelete={() => onDelete(d.id)}
+                  onRename={(title) => onRename(d.id, title)}
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* Tip removed: keep sidebar clean */}
+        </div>
+      </motion.aside>
+    </>
+  );
+}
+
+function DocRow({
+  doc,
+  active,
+  isStartup,
+  onSelect,
+  onDelete,
+  onRename
+}: {
+  doc: Doc;
+  active: boolean;
+  isStartup: boolean;
+  onSelect: () => void;
+  onDelete: () => void;
+  onRename: (title: string) => void;
+}) {
+  const { t } = useI18n();
+  const [editing, setEditing] = useState(false);
+  const [title, setTitle] = useState(doc.title);
+  const displayTitle = displayDocTitle(doc.title, t);
+
+  return (
+    <div
+      className={cn(
+        "group relative rounded-2xl border border-white/10 bg-white/5 px-3 py-2.5 backdrop-blur-xl transition",
+        "hover:bg-white/10",
+        active && "bg-white/12 ring-1 ring-white/10"
+      )}
+      role="button"
+      tabIndex={0}
+      onClick={() => {
+        if (editing) return;
+        onSelect();
+      }}
+      onKeyDown={(e) => {
+        if (editing) return;
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          onSelect();
+        }
+      }}
+    >
+      <div className="relative flex items-center gap-3">
+        <div className={cn("h-9 w-9 rounded-xl border border-white/10 bg-white/10 grid place-items-center", active && "bg-white/15")}>
+          <FileText className="h-4 w-4 text-white/80" />
+        </div>
+
+        <div className="min-w-0 flex-1">
+          {editing ? (
+            <input
+              className="w-full bg-transparent text-sm font-medium text-white outline-none"
+              value={title}
+              autoFocus
+              onChange={(e) => setTitle(e.target.value)}
+              onClick={(e) => e.stopPropagation()}
+              onBlur={() => { setEditing(false); onRename(title); }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") { (e.target as HTMLInputElement).blur(); }
+                if (e.key === "Escape") { setEditing(false); setTitle(doc.title); }
+              }}
+            />
+          ) : (
+            <div className="truncate text-sm font-medium text-white/90">{displayTitle}</div>
+          )}
+          <div className="truncate text-[11px] text-white/45">
+            {new Date(doc.updatedAt).toLocaleString()}
+          </div>
+        </div>
+
+        <div className="relative z-10 flex items-center gap-1 opacity-0 transition group-hover:opacity-100">
+          {!isStartup ? (
+            <>
+              <button
+                className="rounded-xl p-2 text-white/70 transition hover:bg-white/10 hover:text-white"
+                onClick={(e) => { e.stopPropagation(); setEditing(true); }}
+                aria-label={t("sidebar.rename")}
+                title={t("sidebar.rename")}
+              >
+                <span className="text-[11px] font-medium">Aa</span>
+              </button>
+              <button
+                className="rounded-xl p-2 text-white/70 transition hover:bg-white/10 hover:text-white"
+                onClick={(e) => { e.stopPropagation(); onDelete(); }}
+                aria-label={t("sidebar.delete")}
+                title={t("sidebar.delete")}
+              >
+                <Trash2 className="h-4 w-4" />
+              </button>
+            </>
+          ) : null}
+        </div>
+      </div>
+    </div>
+  );
+}

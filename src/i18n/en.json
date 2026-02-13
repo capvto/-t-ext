@@ -1,0 +1,294 @@
+{
+  "language": {
+    "label": "Language",
+    "switch": "Switch language",
+    "it": "Italian",
+    "en": "English"
+  },
+  "doc": {
+    "untitled": "Untitled"
+  },
+  "sidebar": {
+    "title": "Documents",
+    "searchPlaceholder": "Search…",
+    "new": "New document",
+    "closeOverlay": "Close sidebar overlay",
+    "close": "Close sidebar",
+    "tip": "Tip: Cmd/Ctrl+Enter to create a new block.",
+    "openAria": "Open {{title}}",
+    "rename": "Rename",
+    "delete": "Delete",
+    "tipBlocks": "Tip: Cmd/Ctrl+Enter to create a new block.",
+    "tipPlain": "Tip: enable Blocks in Customize to write paragraph-by-paragraph."
+  },
+  "editor": {
+    "openDocs": "Open documents",
+    "closeDocs": "Close documents",
+    "titlePlaceholder": "Title…",
+    "stats": "{{words}} words · {{chars}} characters",
+    "newDoc": "New document",
+    "export": "Export .md",
+    "import": "Import into this document",
+    "hintClick": "Click a block to edit",
+    "hintExit": "to exit",
+    "hintSplit": "to split",
+    "hintDeleteEmpty": "on an empty block to delete",
+    "addBlock": "+ Block",
+    "footerBy": "Developed by",
+    "policyLink": "Cookie & Privacy Policy"
+  },
+  "block": {
+    "delete": "Delete block",
+    "placeholder": "Write…",
+    "editing": "Editing…",
+    "previewReady": "Preview ready"
+  },
+  "cookie": {
+    "bannerText": "We use technical storage (localStorage) and anonymous analytics (Umami) to improve the experience.",
+    "ok": "OK"
+  },
+  "code": {
+    "copy": "Copy",
+    "copied": "Copied"
+  },
+  "custom": {
+    "button": "Advanced",
+    "title": "Advanced note",
+    "subtitle": "Document: {{title}}",
+    "tabTheme": "Theme",
+    "tabPlugins": "Extensions",
+    "apply": "Apply",
+    "saveClose": "Save & Close",
+    "close": "Close",
+    "themeTitle": "Note CSS",
+    "themeHint": "This CSS is applied only to this note (not the rest of the app).",
+    "themePlaceholder": "/* Example */\n.spaced { letter-spacing: .12em; }\n.right { text-align: right; }",
+    "themeScopeHint": "Tip: use simple classes. (t)ext will automatically scope your CSS to the note.",
+    "pluginsTitle": "Markdown extensions",
+    "pluginsHint": "Extensions are small JavaScript scripts that can transform Markdown or register markdown-it rules. Treat them as trusted code.",
+    "pluginsEmpty": "No extensions yet. Add one to get started.",
+    "pluginsSelect": "Select an extension on the left.",
+    "addPlugin": "Add",
+    "delete": "Delete",
+    "enabled": "Enabled",
+    "enabledOn": "On",
+    "enabledOff": "Off",
+    "error": "Error",
+    "template": "Insert example",
+    "templateBasic": "Custom syntax (!ciao!, -> ->)",
+    "templateMdit": "Advanced: markdown-it",
+    "pluginNew": "New extension",
+    "pluginUnnamed": "Unnamed",
+    "pluginNamePlaceholder": "Extension name…",
+    "pluginCodePlaceholder": "// Write your code here\nreturn { ... };",
+    "pluginFooterHint": "Note: the script must end with `return { ... }`.",
+    "presetsTitle": "Preset themes",
+    "presetsHint": "Pick a theme, then choose whether to replace or append to your CSS.",
+    "presetsUse": "Use theme",
+    "presetsAppend": "Append",
+    "presetsClear": "Clear"
+  },
+  "personalize": {
+    "button": "Customize",
+    "title": "Customize (t)ext",
+    "subtitle": "Global theme & CSS",
+    "hint": "Click a theme to apply it instantly. Global CSS is saved automatically when you close this window.",
+    "apply": "Apply",
+    "saveClose": "Save & Close",
+    "close": "Close",
+    "presetsTitle": "Preset themes (app)",
+    "presetsHint": "Click a theme to replace your global CSS. Use \"Append\" to add the snippet to your current CSS.",
+    "presetsUse": "Use theme",
+    "presetsAppend": "Append",
+    "presetsClear": "Reset",
+    "cssTitle": "Global CSS",
+    "cssHint": "This CSS is applied to all of (t)ext (UI + preview).",
+    "cssPlaceholder": "/* Example */\n:root { --app-accent: rgba(99,102,241,.95); }\n.titlebar { background: rgba(0,0,0,.35); }",
+    "cssScopeHint": "Note: (t)ext automatically scopes this CSS inside the app surface (.app-root).",
+    "fontTitle": "Fonts",
+    "fontHint": "Choose the global UI font and (optionally) the monospace font. If a font isn't installed, a fallback will be used.",
+    "fontUiLabel": "UI font",
+    "fontMonoLabel": "Monospace font",
+    "fontScopeHint": "Note: fonts are applied to the whole app (.app-root). You can still override them via Global CSS.",
+    "blocksTitle": "Blocks",
+    "blocksHint": "Optional block-based editing. When enabled, (t)ext splits your note into independent blocks (paragraphs).",
+    "blocksLabel": "Enable block-based editor",
+    "blocksHint2": "Default is off. Toggle anytime: your content stays the same, only the editing mode changes."
+  },
+  "appThemes": {
+    "default": {
+      "name": "Default",
+      "desc": "Original look, no CSS."
+    },
+    "obsidian": {
+      "name": "Obsidian",
+      "desc": "Deep dark, purple accent."
+    },
+    "nord": {
+      "name": "Nord",
+      "desc": "Cool and clean, blue/teal."
+    },
+    "dracula": {
+      "name": "Dracula",
+      "desc": "Vibrant purple & pink."
+    },
+    "solarized": {
+      "name": "Solarized",
+      "desc": "Classic Solarized Dark."
+    },
+    "paper": {
+      "name": "Paper",
+      "desc": "Warm, paper-like."
+    },
+    "highContrast": {
+      "name": "High Contrast",
+      "desc": "Stronger borders, max contrast."
+    },
+    "emerald": {
+      "name": "Emerald",
+      "desc": "Mint/green accent."
+    },
+    "rose": {
+      "name": "Rose",
+      "desc": "Rose/red accent."
+    },
+    "mono": {
+      "name": "Mono",
+      "desc": "Minimal grayscale."
+    }
+  },
+  "themes": {
+    "default": {
+      "name": "Default",
+      "desc": "No extra CSS."
+    },
+    "paper": {
+      "name": "Paper",
+      "desc": "Warm, readable, paper-like."
+    },
+    "nord": {
+      "name": "Nord",
+      "desc": "Cool, clean, nordic blues."
+    },
+    "dracula": {
+      "name": "Dracula",
+      "desc": "Vibrant, modern accents."
+    },
+    "typewriter": {
+      "name": "Typewriter",
+      "desc": "Monospace for reading & writing."
+    },
+    "highContrast": {
+      "name": "High Contrast",
+      "desc": "Stronger separation, more contrast."
+    }
+  },
+  "appFonts": {
+    "default": {
+      "name": "Default",
+      "desc": "App default (Tailwind + system)."
+    },
+    "system": {
+      "name": "System UI",
+      "desc": "Modern system stack."
+    },
+    "inter": {
+      "name": "Inter",
+      "desc": "Clean and very readable (if installed)."
+    },
+    "sf": {
+      "name": "SF Pro",
+      "desc": "Apple-like feel (macOS/iOS)."
+    },
+    "plex": {
+      "name": "IBM Plex Sans",
+      "desc": "Neutral, technical vibe."
+    },
+    "grotesk": {
+      "name": "Space Grotesk",
+      "desc": "Geometric, modern."
+    },
+    "source": {
+      "name": "Source Sans 3",
+      "desc": "High readability, editorial style."
+    },
+    "serif": {
+      "name": "Serif",
+      "desc": "Classic serif (Georgia/Times)."
+    }
+  },
+  "appMonoFonts": {
+    "default": {
+      "name": "Default",
+      "desc": "App default monospace."
+    },
+    "system": {
+      "name": "System Mono",
+      "desc": "System monospace stack (SF Mono/Consolas…)."
+    },
+    "jetbrains": {
+      "name": "JetBrains Mono",
+      "desc": "Compact and great for code (if installed)."
+    },
+    "fira": {
+      "name": "Fira Code",
+      "desc": "With ligatures (if installed)."
+    },
+    "plex": {
+      "name": "IBM Plex Mono",
+      "desc": "Clean, readable monospace."
+    }
+  },
+  "menu": {
+    "settings": "Settings",
+    "close": "Close menu"
+  },
+  "publish": {
+    "title": "Publish",
+    "subtitle": "Share “{{title}}” as a public page",
+    "button": "Publish",
+    "what": "Online (public link + edit code)",
+    "desc": "Create a public page you can share. You’ll also get a secret edit code to update or delete it later.",
+    "customLink": "Custom link (optional)",
+    "customLinkDesc": "Pick the slug (the part after the domain) to get a link like {{origin}}/my-page. Leave it empty to generate a short random link.",
+    "customLinkHint": "Letters, numbers, - and _ only (2–64 chars).",
+    "customLinkInvalid": "Invalid link: use only letters, numbers, - and _ (2–64 chars) and avoid reserved words.",
+    "publish": "Publish now",
+    "publishing": "Publishing…",
+    "close": "Close",
+    "note": "Note: locally this works on Netlify only (use “netlify dev”).",
+    "viewLink": "Public link",
+    "editLink": "Edit link",
+    "editCode": "Edit code",
+    "editCodeHint": "Keep it safe: open the public link, click “Edit” and paste the code to edit/delete.",
+    "copy": "Copy",
+    "copied": "Copied",
+    "open": "Open",
+    "done": "Done"
+  },
+  "public": {
+    "back": "Back to editor",
+    "untitled": "Untitled",
+    "updatedAt": "Updated: {{date}}",
+    "copyLink": "Copy link",
+    "edit": "Edit",
+    "exitEdit": "Exit",
+    "saveToText": "Save to (t)ext",
+    "loading": "Loading…",
+    "error": "Error",
+    "editMode": "Edit mode (secret code provided).",
+    "enterEditCodeTitle": "Enter edit code",
+    "enterEditCodeDesc": "To edit or delete this page, enter the secret code generated when you published it.",
+    "editCodePlaceholder": "Edit code (12 chars)",
+    "unlockEdit": "Unlock editing",
+    "cancel": "Cancel",
+    "invalidEditCode": "Invalid code. Please check and try again.",
+    "save": "Save",
+    "saving": "Saving…",
+    "delete": "Delete",
+    "confirmDelete": "Delete this page permanently?",
+    "footer": "Published with (t)ext",
+    "editPageHint": "Enter the secret code to enable editing and save changes.",
+    "markdownLabel": "Markdown"
+  }
+}

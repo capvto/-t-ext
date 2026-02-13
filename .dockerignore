@@ -1,0 +1,14 @@
+.git
+node_modules
+dist
+coverage
+release
+*.tsbuildinfo
+npm-debug.log
+
+backend/node_modules
+backend/dist
+backend/coverage
+backend/.env
+
+.env

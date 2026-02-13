@@ -1,0 +1,51 @@
+{
+  "name": "text-markdown-backend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Production-ready backend for text-markdown publish API",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "build": "prisma generate && tsc -p tsconfig.json",
+    "start": "node dist/server.js",
+    "lint": "eslint \"src/**/*.ts\" \"tests/**/*.ts\" \"scripts/**/*.ts\"",
+    "format": "prettier --write \"{src,tests,scripts}/**/*.ts\" \"*.{js,cjs,ts,json,md,yml,yaml}\"",
+    "format:check": "prettier --check \"{src,tests,scripts}/**/*.ts\" \"*.{js,cjs,ts,json,md,yml,yaml}\"",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate:dev": "prisma migrate dev",
+    "prisma:migrate:deploy": "prisma migrate deploy",
+    "prisma:studio": "prisma studio",
+    "import:netlify:dry": "tsx scripts/import-netlify-blobs.ts --dry-run",
+    "import:netlify": "tsx scripts/import-netlify-blobs.ts --apply"
+  },
+  "dependencies": {
+    "@fastify/cors": "^11.1.0",
+    "@fastify/helmet": "^13.0.2",
+    "@fastify/rate-limit": "^10.3.0",
+    "@fastify/swagger": "^9.5.2",
+    "@fastify/swagger-ui": "^5.2.3",
+    "@netlify/blobs": "^9.0.0",
+    "@prisma/client": "^6.4.1",
+    "fastify": "^5.2.1",
+    "fastify-plugin": "^5.0.1",
+    "prisma": "^6.4.1",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.20.0",
+    "@types/node": "^22.13.1",
+    "@types/supertest": "^6.0.3",
+    "eslint": "^9.20.1",
+    "pino-pretty": "^13.0.0",
+    "prettier": "^3.5.1",
+    "supertest": "^7.0.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.24.1",
+    "vitest": "^3.0.7"
+  }
+}

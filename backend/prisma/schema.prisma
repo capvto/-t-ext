@@ -1,0 +1,20 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Paste {
+  id        String   @id @db.VarChar(64)
+  title     String   @default("") @db.VarChar(120)
+  content   String   @db.Text
+  editHash  String   @map("edit_hash") @db.Char(64)
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt DateTime @default(now()) @map("updated_at") @db.Timestamptz(6)
+
+  @@index([updatedAt], map: "pastes_updated_at_idx")
+  @@map("pastes")
+}
