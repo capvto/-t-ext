@@ -1,0 +1,294 @@
+{
+  "language": {
+    "label": "Lingua",
+    "switch": "Cambia lingua",
+    "it": "Italiano",
+    "en": "Inglese"
+  },
+  "doc": {
+    "untitled": "Senza titolo"
+  },
+  "sidebar": {
+    "title": "Documenti",
+    "searchPlaceholder": "Cerca…",
+    "new": "Nuovo documento",
+    "closeOverlay": "Chiudi overlay documenti",
+    "close": "Chiudi documenti",
+    "tip": "Tip: Cmd/Ctrl+Enter per creare un nuovo blocco.",
+    "openAria": "Apri {{title}}",
+    "rename": "Rinomina",
+    "delete": "Elimina",
+    "tipBlocks": "Tip: Cmd/Ctrl+Enter per creare un nuovo blocco.",
+    "tipPlain": "Tip: abilita i Blocchi in Personalizza per scrivere per paragrafi."
+  },
+  "editor": {
+    "openDocs": "Apri documenti",
+    "closeDocs": "Chiudi documenti",
+    "titlePlaceholder": "Titolo…",
+    "stats": "{{words}} parole · {{chars}} caratteri",
+    "newDoc": "Nuovo documento",
+    "export": "Esporta .md",
+    "import": "Importa in questo documento",
+    "hintClick": "Clicca un blocco per modificare",
+    "hintExit": "per uscire",
+    "hintSplit": "per split",
+    "hintDeleteEmpty": "su blocco vuoto per cancellare",
+    "addBlock": "+ Blocco",
+    "footerBy": "Sviluppato da",
+    "policyLink": "Cookie & Privacy Policy"
+  },
+  "block": {
+    "delete": "Elimina blocco",
+    "placeholder": "Scrivi…",
+    "editing": "Modifica…",
+    "previewReady": "Anteprima pronta"
+  },
+  "cookie": {
+    "bannerText": "Usiamo storage tecnico (localStorage) e statistiche anonime (Umami) per migliorare l’esperienza.",
+    "ok": "OK"
+  },
+  "code": {
+    "copy": "Copia",
+    "copied": "Copiato"
+  },
+  "custom": {
+    "button": "Avanzate",
+    "title": "Avanzate nota",
+    "subtitle": "Documento: {{title}}",
+    "tabTheme": "Tema",
+    "tabPlugins": "Estensioni",
+    "apply": "Applica",
+    "saveClose": "Salva & Chiudi",
+    "close": "Chiudi",
+    "themeTitle": "CSS della nota",
+    "themeHint": "Questo CSS viene applicato solo a questa nota (non al resto dell'app).",
+    "themePlaceholder": "/* Esempio */\n.spaced { letter-spacing: .12em; }\n.right { text-align: right; }",
+    "themeScopeHint": "Suggerimento: usa classi semplici. (t)ext scoperà automaticamente il CSS alla nota.",
+    "pluginsTitle": "Estensioni Markdown",
+    "pluginsHint": "Le estensioni sono piccoli script JavaScript che possono trasformare il Markdown o registrare regole markdown-it. Trattale come codice fidato.",
+    "pluginsEmpty": "Nessuna estensione. Aggiungine una per iniziare.",
+    "pluginsSelect": "Seleziona un'estensione a sinistra.",
+    "addPlugin": "Aggiungi",
+    "delete": "Elimina",
+    "enabled": "Attiva",
+    "enabledOn": "On",
+    "enabledOff": "Off",
+    "error": "Errore",
+    "template": "Inserisci esempio",
+    "templateBasic": "Sintassi custom (!ciao!, -> ->)",
+    "templateMdit": "Avanzato: markdown-it",
+    "pluginNew": "Nuova estensione",
+    "pluginUnnamed": "Senza nome",
+    "pluginNamePlaceholder": "Nome estensione…",
+    "pluginCodePlaceholder": "// Scrivi qui il codice\nreturn { ... };",
+    "pluginFooterHint": "Nota: lo script deve finire con `return { ... }`.",
+    "presetsTitle": "Temi predefiniti",
+    "presetsHint": "Seleziona un tema e poi scegli se sostituire o aggiungere al CSS.",
+    "presetsUse": "Usa tema",
+    "presetsAppend": "Aggiungi",
+    "presetsClear": "Svuota"
+  },
+  "personalize": {
+    "button": "Personalizza",
+    "title": "Personalizza (t)ext",
+    "subtitle": "Tema e CSS globali",
+    "hint": "Clicca un tema per applicarlo subito. Il CSS globale viene salvato automaticamente quando chiudi questa finestra.",
+    "apply": "Applica",
+    "saveClose": "Salva & Chiudi",
+    "close": "Chiudi",
+    "presetsTitle": "Temi predefiniti (app)",
+    "presetsHint": "Clicca un tema per sostituire il CSS globale. Usa \"Aggiungi\" per accodare lo snippet al CSS attuale.",
+    "presetsUse": "Usa tema",
+    "presetsAppend": "Aggiungi",
+    "presetsClear": "Ripristina",
+    "cssTitle": "CSS globale",
+    "cssHint": "Questo CSS viene applicato a tutto (t)ext (interfaccia + preview).",
+    "cssPlaceholder": "/* Esempio */\n:root { --app-accent: rgba(99,102,241,.95); }\n.titlebar { background: rgba(0,0,0,.35); }",
+    "cssScopeHint": "Nota: (t)ext scoperà automaticamente il CSS dentro la superficie dell'app (.app-root).",
+    "fontTitle": "Font",
+    "fontHint": "Scegli il font globale dell’interfaccia e (opzionale) quello monospace. Se un font non è installato, verrà usato il fallback.",
+    "fontUiLabel": "Font interfaccia",
+    "fontMonoLabel": "Font monospace",
+    "fontScopeHint": "Nota: i font sono applicati a tutta l’app (.app-root). Puoi comunque sovrascriverli via CSS globale.",
+    "blocksTitle": "Blocchi",
+    "blocksHint": "Editor a blocchi opzionale. Se attivo, (t)ext divide la nota in blocchi indipendenti (paragrafi).",
+    "blocksLabel": "Abilita editor a blocchi",
+    "blocksHint2": "Di default è disattivo. Puoi attivarlo/disattivarlo quando vuoi: il contenuto resta lo stesso, cambia solo la modalità di editing."
+  },
+  "appThemes": {
+    "default": {
+      "name": "Default",
+      "desc": "Aspetto originale, nessun CSS."
+    },
+    "obsidian": {
+      "name": "Obsidian",
+      "desc": "Scuro profondo, accento viola."
+    },
+    "nord": {
+      "name": "Nord",
+      "desc": "Freddo e pulito, blu/teal."
+    },
+    "dracula": {
+      "name": "Dracula",
+      "desc": "Vibrante, viola e rosa."
+    },
+    "solarized": {
+      "name": "Solarized",
+      "desc": "Classico Solarized Dark."
+    },
+    "paper": {
+      "name": "Paper",
+      "desc": "Caldo, stile carta."
+    },
+    "highContrast": {
+      "name": "High Contrast",
+      "desc": "Bordi più forti, massimo contrasto."
+    },
+    "emerald": {
+      "name": "Emerald",
+      "desc": "Accento verde/menta."
+    },
+    "rose": {
+      "name": "Rose",
+      "desc": "Accento rosa/rosso."
+    },
+    "mono": {
+      "name": "Mono",
+      "desc": "Minimal in scala di grigi."
+    }
+  },
+  "themes": {
+    "default": {
+      "name": "Default",
+      "desc": "Nessun CSS aggiuntivo."
+    },
+    "paper": {
+      "name": "Carta",
+      "desc": "Caldo e leggibile, stile paper."
+    },
+    "nord": {
+      "name": "Nord",
+      "desc": "Freddo e pulito, accenti blu."
+    },
+    "dracula": {
+      "name": "Dracula",
+      "desc": "Accenti vividi e moderni."
+    },
+    "typewriter": {
+      "name": "Typewriter",
+      "desc": "Monospace per lettura e scrittura."
+    },
+    "highContrast": {
+      "name": "High Contrast",
+      "desc": "Separazione forte, più contrasto."
+    }
+  },
+  "appFonts": {
+    "default": {
+      "name": "Default",
+      "desc": "Predefinito dell’app (Tailwind + sistema)."
+    },
+    "system": {
+      "name": "System UI",
+      "desc": "Stack moderno di sistema."
+    },
+    "inter": {
+      "name": "Inter",
+      "desc": "Pulito e super leggibile (se installato)."
+    },
+    "sf": {
+      "name": "SF Pro",
+      "desc": "Look & feel Apple (macOS/iOS)."
+    },
+    "plex": {
+      "name": "IBM Plex Sans",
+      "desc": "Neutro e tecnico."
+    },
+    "grotesk": {
+      "name": "Space Grotesk",
+      "desc": "Geometrico e moderno."
+    },
+    "source": {
+      "name": "Source Sans 3",
+      "desc": "Leggibilità alta, stile editoriale."
+    },
+    "serif": {
+      "name": "Serif",
+      "desc": "Serif classico (Georgia/Times)."
+    }
+  },
+  "appMonoFonts": {
+    "default": {
+      "name": "Default",
+      "desc": "Predefinito monospace dell’app."
+    },
+    "system": {
+      "name": "System Mono",
+      "desc": "Monospace di sistema (SF Mono/Consolas…)."
+    },
+    "jetbrains": {
+      "name": "JetBrains Mono",
+      "desc": "Compatto, ottimo per codice (se installato)."
+    },
+    "fira": {
+      "name": "Fira Code",
+      "desc": "Con ligature (se installato)."
+    },
+    "plex": {
+      "name": "IBM Plex Mono",
+      "desc": "Monospace pulito e leggibile."
+    }
+  },
+  "menu": {
+    "settings": "Impostazioni",
+    "close": "Chiudi menu"
+  },
+  "publish": {
+    "title": "Pubblica",
+    "subtitle": "Condividi “{{title}}” come pagina pubblica",
+    "button": "Pubblica",
+    "what": "Online (link pubblico + codice di modifica)",
+    "desc": "Crea una pagina pubblica con un link da condividere. Ti viene anche dato un codice segreto per modificare o eliminare la pagina in futuro.",
+    "customLink": "Link personalizzato (opzionale)",
+    "customLinkDesc": "Scegli lo slug (la parte dopo il dominio) per ottenere un link tipo {{origin}}/mia-pagina. Se lo lasci vuoto, verrà generato un link corto casuale.",
+    "customLinkHint": "Solo lettere, numeri, - e _ (2–64 caratteri).",
+    "customLinkInvalid": "Link non valido: usa solo lettere, numeri, - e _ (2–64 caratteri) e non usare parole riservate.",
+    "publish": "Pubblica ora",
+    "publishing": "Pubblicazione…",
+    "close": "Chiudi",
+    "note": "Nota: in locale funziona solo su Netlify (usa “netlify dev”).",
+    "viewLink": "Link pubblico",
+    "editLink": "Link modifica",
+    "editCode": "Codice modifica",
+    "editCodeHint": "Conservalo: apri il link pubblico, premi “Modifica” e incolla il codice per modificare/eliminare.",
+    "copy": "Copia",
+    "copied": "Copiato",
+    "open": "Apri",
+    "done": "Fatto"
+  },
+  "public": {
+    "back": "Torna all’editor",
+    "untitled": "Senza titolo",
+    "updatedAt": "Aggiornato: {{date}}",
+    "copyLink": "Copia link",
+    "edit": "Modifica",
+    "exitEdit": "Esci",
+    "saveToText": "Salva in (t)ext",
+    "loading": "Caricamento…",
+    "error": "Errore",
+    "editMode": "Modalità modifica (codice segreto inserito).",
+    "enterEditCodeTitle": "Inserisci il codice di modifica",
+    "enterEditCodeDesc": "Per modificare o eliminare questa pagina, inserisci il codice segreto generato quando l’hai pubblicata.",
+    "editCodePlaceholder": "Codice modifica (12 caratteri)",
+    "unlockEdit": "Sblocca modifica",
+    "cancel": "Annulla",
+    "invalidEditCode": "Codice non valido. Controlla e riprova.",
+    "save": "Salva",
+    "saving": "Salvataggio…",
+    "delete": "Elimina",
+    "confirmDelete": "Eliminare definitivamente questa pagina?",
+    "footer": "Pubblicato con (t)ext",
+    "editPageHint": "Inserisci il codice segreto per abilitare la modifica e salvare.",
+    "markdownLabel": "Markdown"
+  }
+}

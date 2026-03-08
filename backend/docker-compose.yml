@@ -1,0 +1,46 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: text_markdown
+      POSTGRES_USER: text_markdown
+      POSTGRES_PASSWORD: text_markdown
+    ports:
+      - '5432:5432'
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U text_markdown -d text_markdown']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      NODE_ENV: production
+      PORT: 3001
+      DATABASE_URL: postgresql://text_markdown:text_markdown@postgres:5432/text_markdown?schema=public
+      PUBLIC_BASE_URL: http://localhost:5173
+      TRUST_PROXY: 'true'
+      CORS_ORIGINS: http://localhost:5173
+      RATE_LIMIT_PUBLISH_MAX: 20
+      RATE_LIMIT_MUTATION_MAX: 60
+      RATE_LIMIT_WINDOW: 1 minute
+      LOG_LEVEL: info
+    ports:
+      - '3001:3001'
+    command: sh -c "npm run prisma:migrate:deploy && node dist/server.js"
+    healthcheck:
+      test: ['CMD', 'node', '-e', "fetch('http://127.0.0.1:3001/healthz').then((r)=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  pg_data:

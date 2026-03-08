@@ -1,0 +1,57 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-text_markdown}
+      POSTGRES_USER: ${POSTGRES_USER:-text_markdown}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env or via deploy script}
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U ${POSTGRES_USER:-text_markdown} -d ${POSTGRES_DB:-text_markdown}']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      NODE_ENV: production
+      PORT: 3001
+      DATABASE_URL: postgresql://${POSTGRES_USER:-text_markdown}:${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env or via deploy script}@postgres:5432/${POSTGRES_DB:-text_markdown}?schema=public
+      PUBLIC_BASE_URL: ${PUBLIC_BASE_URL:-https://web.textmarkdown.app}
+      TRUST_PROXY: 'true'
+      FORWARDED_HOST_ALLOWLIST: ${FORWARDED_HOST_ALLOWLIST:-}
+      CORS_ORIGINS: ${CORS_ORIGINS:-https://web.textmarkdown.app}
+      RATE_LIMIT_PUBLISH_MAX: ${RATE_LIMIT_PUBLISH_MAX:-20}
+      RATE_LIMIT_MUTATION_MAX: ${RATE_LIMIT_MUTATION_MAX:-60}
+      RATE_LIMIT_WINDOW: ${RATE_LIMIT_WINDOW:-1 minute}
+      LOG_LEVEL: ${LOG_LEVEL:-info}
+    command: sh -c "npm run prisma:migrate:deploy && node dist/src/server.js"
+    healthcheck:
+      test: ['CMD', 'node', '-e', "fetch('http://127.0.0.1:3001/healthz').then((r)=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+      args:
+        VITE_PUBLISH_API_BASE: ${VITE_PUBLISH_API_BASE:-/api}
+    depends_on:
+      - api
+    ports:
+      - '${FRONTEND_PORT:-3100}:80'
+    restart: unless-stopped
+
+volumes:
+  pg_data:
