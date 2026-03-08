@@ -200,6 +200,15 @@ export default function Editor({
     return { chars, words };
   }, [content]);
 
+  async function handleImportAction() {
+    if (window.electronAPI?.openMarkdown) {
+      const res = await window.electronAPI.openMarkdown();
+      if (res?.content != null) onImport(res.content, res.filePath);
+      return;
+    }
+    inputFileRef.current?.click();
+  }
+
   function refreshSettingsAnchor() {
     const rect = settingsBtnRef.current?.getBoundingClientRect();
     if (!rect) return;
@@ -291,15 +300,8 @@ export default function Editor({
             <GlassIconButton
               icon={<Upload className="h-4 w-4" />}
               label={t("editor.import")}
-            onClick={async () => {
-              if (window.electronAPI?.openMarkdown) {
-                const res = await window.electronAPI.openMarkdown();
-                if (res?.content != null) onImport(res.content, res.filePath);
-              } else {
-                inputFileRef.current?.click();
-              }
-            }}
-          />
+              onClick={handleImportAction}
+            />
           </div>
 
           {publicEdit ? (
@@ -382,6 +384,45 @@ export default function Editor({
                         />
                       </div>
 
+                      <div className="border-t border-white/10 p-2 sm:hidden">
+                        {!effectiveHideNewDoc ? (
+                          <MenuItem
+                            icon={<Plus className="h-4 w-4" />}
+                            label={t("editor.newDoc")}
+                            onClick={() => {
+                              setSettingsOpen(false);
+                              onCreateDoc();
+                            }}
+                          />
+                        ) : null}
+                        <MenuItem
+                          icon={<Download className="h-4 w-4" />}
+                          label={t("editor.export")}
+                          onClick={() => {
+                            setSettingsOpen(false);
+                            onExport();
+                          }}
+                        />
+                        <MenuItem
+                          icon={<Upload className="h-4 w-4" />}
+                          label={t("editor.import")}
+                          onClick={() => {
+                            setSettingsOpen(false);
+                            void handleImportAction();
+                          }}
+                        />
+                        {!effectiveHidePublish && !isElectron ? (
+                          <MenuItem
+                            icon={<Share2 className="h-4 w-4" />}
+                            label={t("publish.button")}
+                            onClick={() => {
+                              setSettingsOpen(false);
+                              setPublishOpen(true);
+                            }}
+                          />
+                        ) : null}
+                      </div>
+
                       <div className="border-t border-white/10 p-2">
                         <div className="px-2 pb-1 text-[10px] font-semibold uppercase tracking-wider text-white/40">
                           {t("language.label")}
@@ -436,7 +477,9 @@ export default function Editor({
           <div className={cn("mx-auto w-full max-w-[860px]", noteScopeClass)} data-note-id={doc.id}>
             {scopedCss ? <style>{scopedCss}</style> : null}
             <MarkdownBlock
+              key={doc.id}
               text={content}
+              render={renderer.render}
               onChange={setContent}
             />
 
