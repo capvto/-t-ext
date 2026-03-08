@@ -8,6 +8,7 @@ import { uid } from "./lib/utils";
 import { STARTUP_DOC_ID, STARTUP_DOC_TITLE } from "./lib/constants";
 import type { Doc } from "./lib/types";
 import { useDebouncedCallback } from "./hooks/useDebouncedCallback";
+import { useIsCoarsePointer } from "./hooks/useIsCoarsePointer";
 import { scopeCss } from "./lib/cssScope";
 import { APP_FONTS, APP_MONO_FONTS } from "./lib/appFonts";
 import { idbGet, idbSet } from "./lib/persistence";
@@ -153,6 +154,7 @@ function safeLsSet(key: string, value: string) {
 }
 
 export default function App() {
+  const isCoarsePointer = useIsCoarsePointer();
   const initial = useMemo(loadDocs, []);
   const initialGlobal = useMemo(loadGlobalSettings, []);
   const [docs, setDocs] = useState<Doc[]>(initial.docs);
@@ -801,11 +803,11 @@ function updateDocContent(id: string, content: string) {
           // In public (view/edit) routes we avoid the heavier backdrop blur on the
           // fullscreen surface. Besides matching the intended look, this also helps
           // Safari/WebView hit-testing stability.
-          (publicRoute ? "" : "backdrop-blur-2xl")
+          (publicRoute ? "" : (isCoarsePointer ? "backdrop-blur-xl" : "backdrop-blur-2xl"))
         }
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.45, ease: [0.2, 0.8, 0.2, 1] }}
+        transition={{ duration: isCoarsePointer ? 0.2 : 0.45, ease: [0.2, 0.8, 0.2, 1] }}
       >
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute inset-0 bg-gradient-to-b from-white/6 to-transparent" />

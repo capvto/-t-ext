@@ -3,6 +3,7 @@ import type { MouseEvent } from "react";
 import { ArrowLeft, Copy, KeyRound, Lock, Save, Trash2 } from "lucide-react";
 import { cn } from "../lib/utils";
 import { deletePaste, getPaste, safeErrorText, updatePaste } from "../lib/rentryApi";
+import { useIsCoarsePointer } from "../hooks/useIsCoarsePointer";
 import { useI18n } from "../i18n";
 
 async function copyToClipboard(text: string) {
@@ -96,6 +97,7 @@ export default function PublicPasteEditPage({
   onGoView?: (id: string) => void;
 }) {
   const { t } = useI18n();
+  const isCoarsePointer = useIsCoarsePointer();
 
   const DEV = import.meta.env.DEV;
   const devLog = (...args: any[]) => {
@@ -266,7 +268,12 @@ export default function PublicPasteEditPage({
   return (
     <div className="relative flex h-full w-full min-h-0 flex-col overflow-hidden">
       {/* Top bar */}
-      <div className="relative z-30 border-b border-white/10 bg-[var(--app-titlebar)] backdrop-blur-2xl px-4 py-3">
+      <div
+        className={cn(
+          "relative z-30 border-b border-white/10 bg-[var(--app-titlebar)] px-3 py-2 sm:px-4 sm:py-3",
+          isCoarsePointer ? "backdrop-blur-md" : "backdrop-blur-2xl"
+        )}
+      >
         <div className="flex items-center gap-2">
           <a
             href={`/${encodeURIComponent(id)}`}
@@ -289,7 +296,13 @@ export default function PublicPasteEditPage({
             </div>
           </div>
 
-          <div className="flex flex-none items-center gap-2">
+          <div
+            className={cn(
+              "flex flex-none items-center gap-2",
+              "max-w-[56vw] overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
+              "sm:max-w-none sm:overflow-visible"
+            )}
+          >
             <button
               type="button"
               data-ui="topbar-btn"
@@ -372,8 +385,13 @@ export default function PublicPasteEditPage({
 
       {/* Body */}
       <div className="relative flex min-h-0 flex-1 flex-col overflow-hidden">
-        <div className="mx-auto w-full max-w-[980px] p-4 sm:p-6">
-          <div className="rounded-3xl border border-white/10 bg-white/5 p-4 shadow-glass backdrop-blur-2xl">
+        <div className="mx-auto w-full max-w-[980px] p-3 sm:p-6">
+          <div
+            className={cn(
+              "rounded-3xl border border-white/10 bg-white/5 p-4 shadow-glass",
+              isCoarsePointer ? "backdrop-blur-md" : "backdrop-blur-2xl"
+            )}
+          >
             <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
               <div className="min-w-0">
                 <div className="flex items-center gap-2 text-sm font-semibold text-white/90">

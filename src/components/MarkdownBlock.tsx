@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { highlightMarkdown } from "../lib/mdHighlight";
 import { cn } from "../lib/utils";
 import { useI18n } from "../i18n";
+import { useIsCoarsePointer } from "../hooks/useIsCoarsePointer";
 
 type Props = {
   text: string;
@@ -12,6 +13,7 @@ type Props = {
 
 export default function MarkdownBlock({ text, render, onChange }: Props) {
   const { t } = useI18n();
+  const isCoarsePointer = useIsCoarsePointer();
   const [local, setLocal] = useState(text);
   const [isEditing, setIsEditing] = useState(false);
   const taRef = useRef<HTMLTextAreaElement | null>(null);
@@ -146,7 +148,8 @@ export default function MarkdownBlock({ text, render, onChange }: Props) {
     <div
       ref={rootRef}
       className={cn(
-        "relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-glass backdrop-blur-xl transition",
+        "relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-glass transition",
+        isCoarsePointer ? "backdrop-blur-md" : "backdrop-blur-xl",
         isEditing ? "ring-1 ring-white/15 bg-white/10" : "hover:bg-white/7"
       )}
       onPointerDown={(e) => {
@@ -163,7 +166,7 @@ export default function MarkdownBlock({ text, render, onChange }: Props) {
               initial={{ opacity: 0, y: 4 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -2 }}
-              transition={{ duration: 0.16 }}
+              transition={{ duration: isCoarsePointer ? 0.1 : 0.16 }}
               className="relative"
               data-no-activate
             >
@@ -197,7 +200,10 @@ export default function MarkdownBlock({ text, render, onChange }: Props) {
                   onFocus={(e) => {
                     // On mobile, keep the input visible while the virtual keyboard opens.
                     requestAnimationFrame(() => {
-                      e.target.scrollIntoView({ behavior: "smooth", block: "nearest" });
+                      e.target.scrollIntoView({
+                        behavior: isCoarsePointer ? "auto" : "smooth",
+                        block: "nearest"
+                      });
                     });
                   }}
                   onKeyDown={(e) => {
@@ -265,7 +271,7 @@ export default function MarkdownBlock({ text, render, onChange }: Props) {
               initial={{ opacity: 0, y: 4 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -2 }}
-              transition={{ duration: 0.2 }}
+              transition={{ duration: isCoarsePointer ? 0.12 : 0.2 }}
               className="prose prose-invert max-w-none text-white/85 prose-code:before:content-none prose-code:after:content-none"
               {...(isEmpty ? {} : { dangerouslySetInnerHTML: { __html: html } })}
             >

@@ -24,6 +24,7 @@ import PolicyModal from "./PolicyModal";
 import ChangelogModal from "./ChangelogModal";
 import CookieBanner from "./CookieBanner";
 import { useInertialScroll } from "../hooks/useInertialScroll";
+import { useIsCoarsePointer } from "../hooks/useIsCoarsePointer";
 import { useI18n } from "../i18n";
 import pkg from "../../package.json";
 import NoteSettingsModal from "./NoteSettingsModal";
@@ -103,6 +104,7 @@ export default function Editor({
   hidePublish
 }: Props) {
   const { t, lang, setLang } = useI18n();
+  const isCoarsePointer = useIsCoarsePointer();
   const isMac = (window.electronAPI?.platform === "darwin") || /Mac/i.test(navigator.platform);
   const isElectron = !!window.electronAPI || /Electron/i.test(navigator.userAgent);
   const effectiveHideNewDoc = (hideNewDoc ?? !!publicEdit);
@@ -243,7 +245,7 @@ export default function Editor({
       {/* Top bar */}
       <div
         className={cn(
-          "titlebar relative flex flex-wrap items-center gap-2 border-b border-white/10 px-4 py-3",
+          "titlebar relative flex items-center gap-2 border-b border-white/10 px-3 py-2 sm:flex-wrap sm:px-4 sm:py-3",
           // macOS traffic-lights live inside the webview when titleBarStyle is hiddenInset.
           // Add a safe inset so our controls never overlap them.
           isMac && "pt-8 pl-[88px]"
@@ -279,7 +281,13 @@ export default function Editor({
           </div>
         </div>
 
-        <div className="flex items-center gap-1.5">
+        <div
+          className={cn(
+            "flex items-center gap-1.5",
+            "max-w-[56vw] overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
+            "sm:max-w-none sm:overflow-visible"
+          )}
+        >
           {!effectiveHideNewDoc ? (
             <div className="hidden sm:block">
               <GlassIconButton
@@ -373,7 +381,10 @@ export default function Editor({
 
                     <motion.div
                       key="settings-menu"
-                      className="fixed z-[9991] w-[260px] overflow-hidden rounded-2xl border border-white/10 bg-zinc-950/95 shadow-2xl backdrop-blur-xl"
+                      className={cn(
+                        "fixed z-[9991] w-[260px] overflow-hidden rounded-2xl border border-white/10 bg-zinc-950/95 shadow-2xl",
+                        isCoarsePointer ? "backdrop-blur-md" : "backdrop-blur-xl"
+                      )}
                       style={{ top: settingsAnchor.top, left: settingsAnchor.left }}
                       initial={{ opacity: 0, y: -6, scale: 0.98 }}
                       animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -480,7 +491,7 @@ export default function Editor({
             // Electron/macOS builds when reaching the top/bottom.
             // Use only vertical overflow: horizontal trackpad gestures should not
             // create accidental sideways scrolling.
-            "app-canvas h-full overflow-y-auto overflow-x-hidden overscroll-contain px-4 py-6 sm:px-8"
+            "app-canvas h-full overflow-y-auto overflow-x-hidden overscroll-contain px-3 py-4 sm:px-8 sm:py-6"
           )}
         >
           <div className={cn("mx-auto w-full max-w-[860px]", noteScopeClass)} data-note-id={doc.id}>

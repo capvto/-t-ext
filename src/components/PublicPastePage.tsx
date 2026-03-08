@@ -5,6 +5,7 @@ import { ArrowLeft, Copy, Download, Pencil } from "lucide-react";
 import { createMarkdownRenderer } from "../lib/markdown";
 import { cn } from "../lib/utils";
 import { getPaste, safeErrorText } from "../lib/rentryApi";
+import { useIsCoarsePointer } from "../hooks/useIsCoarsePointer";
 import { useI18n } from "../i18n";
 
 async function copyToClipboard(text: string) {
@@ -65,6 +66,7 @@ export default function PublicPastePage({
   onSaveToText?: (payload: { title: string; content: string; sourceUrl: string }) => void;
 }) {
   const { t } = useI18n();
+  const isCoarsePointer = useIsCoarsePointer();
 
   const DEV = import.meta.env.DEV;
   const devLog = (...args: any[]) => {
@@ -167,7 +169,12 @@ export default function PublicPastePage({
   return (
     <div className="relative flex h-full w-full min-h-0 flex-col overflow-hidden">
       {/* Top bar */}
-      <div className="relative z-30 border-b border-white/10 bg-[var(--app-titlebar)] backdrop-blur-2xl px-4 py-3">
+      <div
+        className={cn(
+          "relative z-30 border-b border-white/10 bg-[var(--app-titlebar)] px-3 py-2 sm:px-4 sm:py-3",
+          isCoarsePointer ? "backdrop-blur-md" : "backdrop-blur-2xl"
+        )}
+      >
         <div className="flex items-center gap-2">
           <button
             type="button"
@@ -190,7 +197,13 @@ export default function PublicPastePage({
             </div>
           </div>
 
-          <div className="flex flex-none items-center gap-2">
+          <div
+            className={cn(
+              "flex flex-none items-center gap-2",
+              "max-w-[56vw] overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
+              "sm:max-w-none sm:overflow-visible"
+            )}
+          >
             {onSaveToText ? (
               <button
                 type="button"
@@ -252,7 +265,7 @@ export default function PublicPastePage({
 
       {/* Body */}
       <div className="relative flex-1 min-h-0">
-        <div className="h-full overflow-y-auto overflow-x-hidden overscroll-contain px-4 py-6 sm:px-8">
+        <div className="h-full overflow-y-auto overflow-x-hidden overscroll-contain px-3 py-4 sm:px-8 sm:py-6">
           <div className="mx-auto w-full max-w-[860px]">
             {loading ? (
               <div className="rounded-3xl border border-white/10 bg-white/5 p-6 text-sm text-white/70">
