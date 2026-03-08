@@ -31,6 +31,7 @@ import AppPersonalizeModal from "./AppPersonalizeModal";
 import PublishModal from "./PublishModal";
 import { createMarkdownRenderer } from "../lib/markdown";
 import { scopeCss } from "../lib/cssScope";
+import { STARTUP_DOC_ID } from "../lib/constants";
 
 type Props = {
   sidebarOpen: boolean;
@@ -117,6 +118,7 @@ export default function Editor({
   const [settingsOpen, setSettingsOpen] = useState(false);
   const settingsBtnRef = useRef<HTMLButtonElement | null>(null);
   const [settingsAnchor, setSettingsAnchor] = useState<{ top: number; left: number } | null>(null);
+  const [blockSessionKey, setBlockSessionKey] = useState(doc.id);
 
   const lastPushedContentRef = useRef<string>(doc.content);
 
@@ -144,6 +146,13 @@ export default function Editor({
 
   // When switching docs, rehydrate content
   useEffect(() => {
+    const prevDocId = prevDocIdRef.current;
+    const isStartupMaterialization = prevDocId === STARTUP_DOC_ID && doc.id !== STARTUP_DOC_ID;
+    if (!isStartupMaterialization) {
+      // Force a clean edit/preview reset only on real doc switches.
+      setBlockSessionKey(doc.id);
+    }
+
     setTitle(doc.title);
     const normalized = normalizeContent(doc.content);
     setContent(normalized);
@@ -477,7 +486,7 @@ export default function Editor({
           <div className={cn("mx-auto w-full max-w-[860px]", noteScopeClass)} data-note-id={doc.id}>
             {scopedCss ? <style>{scopedCss}</style> : null}
             <MarkdownBlock
-              key={doc.id}
+              key={blockSessionKey}
               text={content}
               render={renderer.render}
               onChange={setContent}
