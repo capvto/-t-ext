@@ -149,14 +149,14 @@ export default function MarkdownBlock({ text, render, onChange }: Props) {
         "relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 shadow-glass backdrop-blur-xl transition",
         isEditing ? "ring-1 ring-white/15 bg-white/10" : "hover:bg-white/7"
       )}
-      onClick={(e) => {
+      onPointerDown={(e) => {
         const target = e.target as HTMLElement;
         if (target.closest("[data-no-activate]")) return;
         if (!isEditing) setIsEditing(true);
       }}
     >
       <div className="relative px-4 py-3">
-        <AnimatePresence initial={false} mode="wait">
+        <AnimatePresence initial={false} mode="sync">
           {isEditing ? (
             <motion.div
               key="edit"
